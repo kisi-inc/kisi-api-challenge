@@ -1,0 +1,31 @@
+version: '2.2'
+
+services:
+  web:
+    build:
+      context: .
+    command: ["bin/rails", "server"]
+    ports:
+      - "3000:3000"
+    environment:
+      - PUBSUB_EMULATOR_HOST=pubsub:8085
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - pubsub
+
+  worker:
+    build:
+      context: .
+    command: ["bin/rails", "worker:run"]
+    environment:
+      - PUBSUB_EMULATOR_HOST=pubsub:8085
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - pubsub
+
+  pubsub:
+    image: knarz/pubsub-emulator@sha256:652d5a2f9e905f3d9a06f49334d70e3745f177e1a388bab61de123c91096447e
+    ports:
+      - "8085:8085"

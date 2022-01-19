@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby("2.7.5")
 
+gem("google-cloud-pubsub")
+gem("pry-rails")
 gem("puma", "~> 5.0")
 gem("rails", "~> 6.1.4", ">= 6.1.4.4")
 gem("rubocop")
