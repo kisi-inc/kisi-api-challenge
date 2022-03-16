@@ -176,7 +176,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (4.0.6)
-    puma (5.5.2)
+    puma (5.6.2)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -259,7 +259,7 @@ DEPENDENCIES
   google-cloud-pubsub
   listen (~> 3.3)
   pry-rails
-  puma (~> 5.0)
+  puma (~> 5.6)
   rails (~> 6.1.4, >= 6.1.4.4)
   rubocop
   sqlite3 (~> 1.4)
