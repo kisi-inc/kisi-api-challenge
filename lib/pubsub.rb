@@ -11,24 +11,6 @@ class Pubsub
     client.topic(name) || client.create_topic(name)
   end
 
-  # Find or create a subscription.
-  #
-  # @param topic [Google::Cloud::PubSub::Topic] The topic
-  # @param subscription [String] The name of the subscription to find or create
-  # @return [Google::Cloud::PubSub::Subscription]
-  def subscription(topic, subscription)
-    topic.subscription(subscription) || topic.subscribe(subscription)
-  end
-
-  # Publish a message to a topic.
-  #
-  # @param topic [Google::Cloud::PubSub::Topic] The topic
-  # @param message [String] The message to publish
-  # @return [Google::Cloud::PubSub::Message]
-  def publish(topic, message)
-    topic.publish(message)
-  end
-
   private
 
   # Create a new client.

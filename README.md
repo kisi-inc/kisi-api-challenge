@@ -1,24 +1,14 @@
-# README
+# The Kisi Backend Code Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This repository can be used as a starting point for the Kisi Backend Code Challenge. Feel free to replace this `README.md` with your own when you submit your solution.
 
-Things you may want to cover:
+This repository contains:
+- A bare-bones Rails 6 API app with a `Gemfile` that contains the neccessary libraries for the project.
+- A rake task ([lib/tasks/worker.rake](lib/tasks/worker.rake)) that can be used to launch the worker process. Use as a starting point for your own code.
+- A class ([lib/pubsub.rb](lib/pubsub.rb)) that wraps the GCP Pub/Sub client. Use as as a starting point for your own code.
+- A [Dockerfile](Dockerfile) and a [docker-compose.yml](docker-compose.yml) configured to spin up necessary services (web server, worker, pub/sub emulator).
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To start all services, make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and run:
+```
+$ docker compose up
+```
