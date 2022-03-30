@@ -12,3 +12,8 @@ To start all services, make sure you have [Docker](https://www.docker.com/produc
 ```
 $ docker compose up
 ```
+
+To restart the worker, i.e. after a code change:
+```
+$ docker compose restart worker
+```
