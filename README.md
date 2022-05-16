@@ -17,3 +17,5 @@ To restart the worker, i.e. after a code change:
 ```
 $ docker compose restart worker
 ```
+
+If you run docker with a VM (e.g. Docker Desktop for Mac) we recommend you allocate at least 2GB Memory
