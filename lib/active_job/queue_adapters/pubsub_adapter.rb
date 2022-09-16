@@ -6,7 +6,7 @@ require_relative("../../pubsub")
 module ActiveJob
   module QueueAdapters
     class PubsubAdapter
-
+      
       def initialize(async: true, pubsub: PubSub.new.client)
         @executor = async ? :io : :immediate
         @pubsub   = pubsub
