@@ -28,9 +28,35 @@ If you run docker with a VM (e.g. Docker Desktop for Mac) we recommend you alloc
 
 # Answer Catalina Rojas
 
-At initializing the application will create and enqueu 5 random Jobs .
+The code will generate random 5 jobs to publish message in different queues in PubSub. This will be done at initializing or with a task that can be trigger from terminal.
+To pull the messages from PubSub Console, there is a worker who also execute the job in question.
+Finally, to enqueue 5 more jobs, there is a "Loads" task that can be executed by terminal.
 
-To pull and exceute the messages published by the above executed jobs, you can run the worker
+
+Regarding the Semantic question: I think this code is "at-least-once" because for each job delivered it handed to the mechanism potentially multiple attempts, such that at least one succeeds or sended to a morge queue.
+
+
+Finally, sadly I encounter some problems with docker and the credentials to connect with the console. The situation is that it can connect to the project in PubSub Console but does not list the topics.
+
+For this reason, I am summiting the answer with 2 options:
+1.- Run the code locally on your machine
+2.- Run the code with docker composer (one time the credential issue is solve).
+
+
+## How to run the code locally:
+
+To run the code locally in you machine, please, clone this repo, change to python 3.9.0 and install gcrp with brew as:
+```
+$ brew install grpc  
+
+```
+
+At initializing the application will create and enqueue 5 random Jobs.
+```
+$ rails s
+```
+
+To pull and exceute the messages published by the above executed jobs, you can run the worker:
 
 ```
 $ NOSOCK=true rake worker:run
@@ -43,10 +69,25 @@ To create 5 other random messages to be publish into Pubsub console
 $ rake loads:run
 ```
 
-I am having some problems with docker and the credentials . It can connect to the cloud and the project but does not liste the topics.
-To run the code locally in you machine, please, clone this repo, change to python 3.9.0 and install gcrp with brew as:
+## How to run the code with docker:
+
+
+At initializing the application will create and enqueue 5 random Jobs.
 ```
-$ brew install grpc  
+$ docker compose up
+```
+
+To pull and exceute the messages published by the above executed jobs, you can run the worker:
 
 ```
+$ docker-compose run web rake worker:run ONLY_PULL=true
+
+```
+
+To create 5 other random messages to be publish into Pubsub console
+
+```
+$ docker-compose run web rake loads:run
+```
+
 
