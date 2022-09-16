@@ -9,7 +9,8 @@ services:
       - "3000:3000"
     environment:
       - PUBSUB_EMULATOR_HOST=pubsub:8681
-      - CRED="usr/scr/app/credentials.json"
+      - CRED="usr/scr/credentials.json"
+      - PUBSUB_PROJECT1=kisi-361918,FirstJob:FirstJob
     volumes:
       - ./:/usr/src/app
     depends_on:
@@ -21,7 +22,8 @@ services:
     command: ["bin/rails", "worker:run"]
     environment:
       - PUBSUB_EMULATOR_HOST=pubsub:8681
-      - CRED="usr/scr/app/credentials.json"
+      - CRED="usr/scr/credentials.json"
+      - PUBSUB_PROJECT1=kisi-361918,FirstJob:FirstJob
     volumes:
       - ./:/usr/src/app
     depends_on:

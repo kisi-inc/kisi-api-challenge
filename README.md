@@ -36,11 +36,11 @@ Finally, to enqueue 5 more jobs, there is a "Loads" task that can be executed by
 Regarding the Semantic question: I think this code is "at-least-once" because for each job delivered it handed to the mechanism potentially multiple attempts, such that at least one succeeds or sended to a morge queue.
 
 
-Finally, sadly I encounter some problems with docker and the credentials to connect with the console. The situation is that it can connect to the project in PubSub Console but does not list the topics.
+Finally, sadly I encounter some problems with docker and Pubsub console. The situation is that it can connect to the project in PubSub Console but does not list the topics.
 
 For this reason, I am summiting the answer with 2 options:
 1.- Run the code locally on your machine
-2.- Run the code with docker composer (one time the credential issue is solve).
+2.- Run the code with docker composer with errors.
 
 
 ## How to run the code locally:
@@ -59,7 +59,7 @@ $ rails s
 To pull and exceute the messages published by the above executed jobs, you can run the worker:
 
 ```
-$ NOSOCK=true rake worker:run
+$ ONLY_PULL=true rake worker:run
 
 ```
 
