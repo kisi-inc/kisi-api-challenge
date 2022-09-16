@@ -10,13 +10,13 @@ class PubSub
     def topic(queue_name)
       name = "#{queue_name}"
 
-      topic(name) || create_topic(name)
+      client.topic(name) || cient.create_topic(name)
     end
 
     def subscription(queue_name)
       name = "#{queue_name}"
 
-      subscription(name) || topic_for(queue_name).subscribe(name)
+      subscription(name) || client.topic(queue_name).subscribe(name)
     end
   
   # Create a new client.
@@ -27,7 +27,7 @@ class PubSub
             project_id = 'kisi-361918'
             Google::Cloud::Pubsub.new(
                 project_id: project_id,
-                credentials: ENV["CRED"]
+                credentials: "usr/scr/credentials.json"
             )
           end
   end

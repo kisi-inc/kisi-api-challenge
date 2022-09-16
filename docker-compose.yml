@@ -9,7 +9,7 @@ services:
       - "3000:3000"
     environment:
       - PUBSUB_EMULATOR_HOST=pubsub:8681
-      - CRED="usr/scr/credentials.json"
+      - CRED="usr/scr/app/credentials.json"
     volumes:
       - ./:/usr/src/app
     depends_on:
@@ -21,7 +21,7 @@ services:
     command: ["bin/rails", "worker:run"]
     environment:
       - PUBSUB_EMULATOR_HOST=pubsub:8681
-      - CRED="usr/scr/credentials.json"
+      - CRED="usr/scr/app/credentials.json"
     volumes:
       - ./:/usr/src/app
     depends_on:

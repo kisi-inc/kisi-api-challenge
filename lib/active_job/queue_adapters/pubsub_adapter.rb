@@ -17,6 +17,7 @@ module ActiveJob
       # @param [ActiveJob::Base] job The job to be performed.
       def enqueue(job, attributes = {})
         puts "Enqueueing job #{job} with attributes #{attributes}"
+        puts @pubsub
         @pubsub.topic(job.queue_name).publish JSON.dump(job.serialize), attributes
       end
 
