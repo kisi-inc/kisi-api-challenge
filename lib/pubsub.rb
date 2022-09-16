@@ -2,21 +2,33 @@
 
 require("google/cloud/pubsub")
 
-class Pubsub
+class PubSub
   # Find or create a topic.
   #
   # @param topic [String] The name of the topic to find or create
   # @return [Google::Cloud::PubSub::Topic]
-  def topic(name)
-    client.topic(name) || client.create_topic(name)
-  end
+    def topic(queue_name)
+      name = "#{queue_name}"
 
-  private
+      topic(name) || create_topic(name)
+    end
 
+    def subscription(queue_name)
+      name = "#{queue_name}"
+
+      subscription(name) || topic_for(queue_name).subscribe(name)
+    end
+  
   # Create a new client.
   #
   # @return [Google::Cloud::PubSub]
   def client
-    @client ||= Google::Cloud::PubSub.new(project_id: "code-challenge")
+    @client ||= begin
+            project_id = 'kisi-361918'
+            Google::Cloud::Pubsub.new(
+                project_id: project_id,
+                credentials: "usr/scr/credentials.json"
+            )
+          end
   end
 end
