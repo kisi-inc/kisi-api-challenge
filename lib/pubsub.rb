@@ -27,7 +27,7 @@ class PubSub
             project_id = 'kisi-361918'
             Google::Cloud::Pubsub.new(
                 project_id: project_id,
-                credentials: "usr/scr/credentials.json"
+                credentials: ENV["CRED"]
             )
           end
   end
