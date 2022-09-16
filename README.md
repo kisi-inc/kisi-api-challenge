@@ -25,3 +25,28 @@ $ docker compose run --rm web bin/rails console
 ```
 
 If you run docker with a VM (e.g. Docker Desktop for Mac) we recommend you allocate at least 2GB Memory
+
+# Answer Catalina Rojas
+
+At initializing the application will create and enqueu 5 random Jobs .
+
+To pull and exceute the messages published by the above executed jobs, you can run the worker
+
+```
+$ NOSOCK=true rake worker:run
+
+```
+
+To create 5 other random messages to be publish into Pubsub console
+
+```
+$ rake loads:run
+```
+
+I am having some problems with docker and the credentials . It can connect to the cloud and the project but does not liste the topics.
+To run the code locally in you machine, please, clone this repo, change to python 3.9.0 and install gcrp with brew as:
+```
+$ brew install grpc  
+
+```
+
