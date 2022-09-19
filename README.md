@@ -47,7 +47,7 @@ For this reason, I am summiting the answer with 2 options:
 
 To run the code locally in you machine, please, clone this repo, change to python 3.9.0 and install gcrp with brew as:
 ```
-$ brew install grpc  
+$ gem install grpc -v 1.49.0.pre1 --pre
 
 ```
 
