@@ -24,6 +24,9 @@ Bundler.require(*Rails.groups)
 require_relative("../lib/active_job/queue_adapters/pubsub_adapter")
 require_relative("../lib/pubsub")
 
+TOPIC = "kisi-challenge-topic"
+SUBSCRIPTION = "kisi-challenge-topic-sub"
+
 module KisiApiChallenge
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -44,5 +47,8 @@ module KisiApiChallenge
 
     # Configures the custom queue adapter.
     config.active_job.queue_adapter = :pubsub
+
+    google_pubsub = Pubsub.new(TOPIC, SUBSCRIPTION)
+    config.pubsub_client = google_pubsub
   end
 end
