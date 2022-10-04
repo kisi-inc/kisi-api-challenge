@@ -10,6 +10,7 @@ class Pubsub
   def topic(name)
     client.topic(name) || client.create_topic(name)
   end
+
   # Find or create a subscription.
   #
   # @param subscription_id [String] The name of the topic to subscribe on
