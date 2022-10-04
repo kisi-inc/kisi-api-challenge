@@ -3,9 +3,9 @@
 namespace(:worker) do
   desc("Run the worker")
   task(run: :environment) do
-    puts("Worker starting...")
+    load_data
     @pubsub = Pubsub.new
-    @queue_name  = "default"
+    @queue_name = "default"
     max_deadline = 10
     subscriber = @pubsub.subscription(@queue_name).listen(deadline: max_deadline) do |message|
       puts("message with id: #{message.message_id} received")
@@ -27,4 +27,13 @@ namespace(:worker) do
       Rails.logger.error(e)
     end
   end
+end
+
+def load_data
+  puts("Make Some Load...")
+  HelloWorldWorker.set(wait: 5.seconds).perform_later
+  HelloWorldWorker.set(wait: 5.seconds).perform_later
+  HelloWorldWorker.set(wait: 5.seconds).perform_later
+  FailedHelloWorldWorker.set(wait: 5.seconds).perform_later
+  FailedHelloWorldWorker.set(wait: 5.seconds).perform_later
 end
