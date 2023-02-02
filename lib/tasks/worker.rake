@@ -8,6 +8,14 @@ namespace(:worker) do
     puts("Worker starting...")
 
     # Block, letting processing threads continue in the background
-    sleep
+    pubsub = PubSub.new.client()
+    subscription = pubsub.subscription("challenge")
+    subscription.listen do |message|
+      job = ActiveJob::DeserializationError.wrap(message) do
+        ActiveJob::Base.deserialize(message.data)
+      end
+      job.perform_now
+      message.acknowledge!
+    end
   end
 end
