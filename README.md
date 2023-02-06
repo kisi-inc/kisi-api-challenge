@@ -23,6 +23,11 @@ $ docker compose up worker
 $ docker compose up pubsub
 ```
 
+To rebuild an image, run:
+```
+$ docker compose build web
+```
+
 To restart the worker, i.e. after a code change:
 ```
 $ docker compose restart worker
