@@ -6,15 +6,25 @@ namespace(:worker) do
     # See https://googleapis.dev/ruby/google-cloud-pubsub/latest/index.html
 
     puts("Worker starting...")
-    sub = Pubsub.subscription("challenge")
+
+    puts("Pubsub New: #{Pubsub.new.subscription("default") == nil}")
+    sub = Pubsub.new.subscription("default")
     subscriber = sub.listen do |received_message|
       # process message
       puts "Data: #{received_message.message.data}"
       puts "Published at #{received_message.message.published_at}"
       puts
+
+      job = received_message.message.data.constantize
+      puts "Job : #{job}"
+      puts
+
+      job.perform_now
+
+      received_message.acknowledge!
     end
 
-    subscriber.on_error do |exception}
+    subscriber.on_error do |exception|
       puts "Exception: #{exeception.class} #{exception.message}"
     end
 
@@ -27,4 +37,12 @@ namespace(:worker) do
     # Block, letting processing threads continue in the background
     sleep
   end
+
+  desc("Run the Hello world Job")
+  task(hello: :environment) do
+    puts("Running hello....")
+
+    HelloWorldJob.perform_later
+  end
+
 end

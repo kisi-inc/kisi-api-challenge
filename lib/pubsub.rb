@@ -11,6 +11,10 @@ class Pubsub
     client.topic(name) || client.create_topic(name)
   end
 
+  def subscription(name)
+    client.subscription(name) || topic(name).subscribe(name)
+  end
+
   private
 
   # Create a new client.
