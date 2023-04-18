@@ -3,9 +3,7 @@ class DividingNumberJob < ApplicationJob
 
   before_enqueue { |job| puts "#{job.class.name}.enqueue - #{job.arguments}" }
 
-  rescue_from(ZeroDivisionError) do |exception|
-    puts "Exception: #{exception}"
-  end
+  retry_on ZeroDivisionError, wait: 5.seconds, attempts: 4
 
   def perform(a, b)
     # Do something later

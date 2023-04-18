@@ -14,7 +14,6 @@ namespace(:worker) do
       data = JSON.parse(received_message.message.data)
       ActiveJob::Base.execute data
 
-      puts "End...!!!"
       received_message.acknowledge!
     end
 
@@ -43,7 +42,7 @@ namespace(:worker) do
   task :division, [:a, :b] => [:environment] do |t, args|
     puts("Running division.... #{args[:a]} - #{args[:b]}")
 
-    DividingNumberJob.perform_later(args[:a].to_f, args[:b].to_f)
+    DividingNumberJob.perform_later(args[:a].to_i, args[:b].to_i)
   end
 
 end
