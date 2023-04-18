@@ -11,16 +11,10 @@ namespace(:worker) do
     sub = Pubsub.new.subscription("default")
     subscriber = sub.listen do |received_message|
       # process message
-      puts "Data: #{received_message.message.data}"
-      puts "Published at #{received_message.message.published_at}"
-      puts
+      data = JSON.parse(received_message.message.data)
+      ActiveJob::Base.execute data
 
-      job = received_message.message.data.constantize
-      puts "Job : #{job}"
-      puts
-
-      job.perform_now
-
+      puts "End...!!!"
       received_message.acknowledge!
     end
 
@@ -43,6 +37,13 @@ namespace(:worker) do
     puts("Running hello....")
 
     HelloWorldJob.perform_later
+  end
+
+  desc("Run the Divider Job")
+  task :division, [:a, :b] => [:environment] do |t, args|
+    puts("Running division.... #{args[:a]} - #{args[:b]}")
+
+    DividingNumberJob.perform_later(args[:a].to_f, args[:b].to_f)
   end
 
 end

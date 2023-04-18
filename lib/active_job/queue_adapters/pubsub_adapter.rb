@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 
 module ActiveJob
   module QueueAdapters
@@ -9,7 +10,8 @@ module ActiveJob
       def enqueue(job)
         puts "[PubSubQueueAdapter enqueue job #{job.inspect}]"
 
-        Pubsub.new.topic("default").publish(job.class.name, arg: job.arguments)
+        puts "JOB Serialize: #{job.serialize}"
+        Pubsub.new.topic("default").publish(job.serialize.to_json)
       end
 
       # Enqueue a job to be performed at a certain time.
