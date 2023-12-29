@@ -11,12 +11,17 @@ class Pubsub
     client.topic(name) || client.create_topic(name)
   end
 
+  def publish(topic_name, message)
+    topic = self.topic(topic_name)
+    topic.publish(message)
+  end
+
   private
 
   # Create a new client.
   #
   # @return [Google::Cloud::PubSub]
   def client
-    @client ||= Google::Cloud::PubSub.new(project_id: "code-challenge")
+    @client ||= Google::Cloud::PubSub.new(project_id: "kisi-code-challenge")
   end
 end
