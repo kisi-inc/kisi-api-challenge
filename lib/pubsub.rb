@@ -16,6 +16,10 @@ class Pubsub
     topic.publish(message)
   end
 
+  def subscribe(subscription_name)
+    client.subscription(subscription_name)
+  end
+
   private
 
   # Create a new client.

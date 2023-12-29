@@ -8,10 +8,14 @@ namespace(:worker) do
     puts("Worker starting...")
 
     pubsub = Pubsub.new
-    subscription = pubsub.client.subscription('general_jobs_queue_subscription')
+    subscription = pubsub.subscribe('general_jobs_queue_subscription')
+
+    p subscription
 
     subscriber = subscription.listen do |received_message|
       begin
+        p "received mesage"
+        p received_message
         job_data = JSON.parse(received_message.data)
 
         job_class = job_data['job_class'].constantize
