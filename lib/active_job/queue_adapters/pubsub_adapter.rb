@@ -9,7 +9,7 @@ module ActiveJob
       def enqueue(job)
         serialized_job = serialize_job(job)
         pubsub = Pubsub.new
-        pubsub.publish('general_jobs_queue', serialized_job)
+        pubsub.publish("general_jobs_queue", serialized_job)
       end
 
       # Enqueue a job to be performed at a certain time.
@@ -17,17 +17,20 @@ module ActiveJob
       # @param [ActiveJob::Base] job The job to be performed.
       # @param [Float] timestamp The time to perform the job.
       def enqueue_at(job, timestamp)
-        p "ENQUEUE_AT"
-        raise(NotImplementedError)
+        Rails.logger.info("Scheduling job #{job.class.name} to be performed at #{Time.at(timestamp)}")
+        serialized_job = serialize_job(job, timestamp)
+        pubsub = Pubsub.new
+        pubsub.publish("general_jobs_queue", serialized_job)
       end
 
       private
 
-      def serialize_job(job)
+      def serialize_job(job, timestamp = nil)
         {
           job_class: job.class.to_s,
           job_id: job.job_id,
-          arguments: job.arguments
+          arguments: job.arguments,
+          execute_at: timestamp
         }.to_json
       end
     end
