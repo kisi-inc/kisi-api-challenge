@@ -56,4 +56,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Use STDOUT for log output
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+
+  # Set log level, :debug can be very verbose, you can change it to :info or higher to reduce verbosity
+  config.log_level = :info
 end
