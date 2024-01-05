@@ -8,8 +8,7 @@ module ActiveJob
       # @param [ActiveJob::Base] job The job to be performed.
       def enqueue(job)
         serialized_job = serialize_job(job)
-        pubsub = Pubsub.new
-        pubsub.publish("general_jobs_queue", serialized_job)
+        Pubsub.publish("general_jobs_queue", serialized_job)
       rescue Google::Cloud::Error => e
         Rails.logger.error("Unexpected GCP error while enqueueing job #{job.class.name}: #{e.message}")
       rescue StandardError => e
@@ -23,8 +22,7 @@ module ActiveJob
       def enqueue_at(job, timestamp)
         Rails.logger.info("Scheduling job #{job.class.name} to be performed at #{Time.at(timestamp)}")
         serialized_job = serialize_job(job, timestamp)
-        pubsub = Pubsub.new
-        pubsub.publish("general_jobs_queue", serialized_job)
+        Pubsub.publish("general_jobs_queue", serialized_job)
       rescue Google::Cloud::Error => e
         Rails.logger.error("Unexpected GCP error while enqueueing job #{job.class.name}: #{e.message}")
       rescue StandardError => e
