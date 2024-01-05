@@ -1,47 +1,42 @@
-# The Kisi Backend Code Challenge
+# Solution for The Kisi Backend Code Challenge
 
-This repository can be used as a starting point for the Kisi Backend Code Challenge. Feel free to replace this `README.md` with your own when you submit your solution.
+## ActiveJob with Google Cloud Pub/Sub Integration
 
-This repository contains:
-- A bare-bones Rails 6 API app with a `Gemfile` that contains the neccessary libraries for the project.
-- A configured adapter ([lib/active_job/queue_adapters/pubsub_adapter.rb](lib/active_job/queue_adapters/pubsub_adapter.rb)) to enqueue jobs. Use as a starting point for your own code.
-- A rake task ([lib/tasks/worker.rake](lib/tasks/worker.rake)) to launch the worker process. Use as a starting point for your own code.
-- A class ([lib/pubsub.rb](lib/pubsub.rb)) that wraps the GCP Pub/Sub client. Use as as a starting point for your own code.
-- A [Dockerfile](Dockerfile) and a [docker-compose.yml](docker-compose.yml) configured to spin up necessary services (web server, worker, pub/sub emulator).
+## Author: William Eduardo Calderón Castillo
 
-The reason we provide a Docker-setup is so that you *don't* have to set up a *real* GCP project, and can instead use the emulator. If you prefer *not* to use Docker, you can ignore the following text.
+## Email: wecalderonc@unal.edu.co
 
-To start all services, make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and run:
-```
-$ docker compose up
-```
+## Introduction
 
-If you prefer to start each service individually, run:
-```
-$ docker compose up web
-$ docker compose up worker
-$ docker compose up pubsub
-```
+This project demonstrates an integration of Rails ActiveJob with Google Cloud Pub/Sub. It includes a custom ActiveJob queue adapter for GCP Pub/Sub, a background job processing system, and a load testing script. The aim is to provide a robust solution for asynchronous job processing in a Rails application using Google Cloud Pub/Sub.
 
-To rebuild an image, run:
-```
-$ docker compose build web
-```
+## Getting Started
 
-To restart the worker, i.e. after a code change:
-```
-$ docker compose restart worker
-```
+### Setup
 
-To start a console:
-```
-$ docker compose run --rm worker bin/rails console
-```
+1. **Clone the Repository:**
 
-If you want to debug using `pry` and breakpoints, you might want to start a service manually instead:
-```
-$ docker compose run --rm worker bash
-# bin/rails worker:run
-```
+   ```bash
+   git clone [repository-url]
+   cd [repository-name]
+   ```
 
-If you run docker with a VM (e.g. Docker Desktop for Mac) we recommend you allocate at least 2GB Memory
+2. **Start Docker Containers:**
+
+   In the project directory, run:
+
+   ```bash
+   docker-compose up
+   ```
+
+   This command builds the necessary Docker containers for the web server and worker.
+
+3. **Run the Load Test (Optional):**
+
+   In another terminal, execute:
+
+   ```bash
+   docker-compose exec web bin/rails runner -e development "require './lib/load_test'; LoadTest.run(60)"
+   ```
+
+   Replace `60` with the number of seconds you want the load test to run.
