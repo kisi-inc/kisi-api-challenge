@@ -19,4 +19,18 @@ class Pubsub
   def client
     @client ||= Google::Cloud::PubSub.new(project_id: "code-challenge")
   end
+
+  def self.publish(message, topic_name = 'jobs')
+    topic(topic_name).publish(message)
+  end
+
+  def self.pull_messages(subscription_name)
+    subscription = client.subscription(subscription_name)
+    subscriber = subscription.listen do |received_message|
+      yield(received_message.data)
+      received_message.acknowledge!
+    end
+    subscriber.start
+    sleep
+  end
 end
