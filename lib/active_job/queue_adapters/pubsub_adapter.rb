@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require ("google/cloud/pubsub")
 
 module ActiveJob
   module QueueAdapters
@@ -7,7 +8,9 @@ module ActiveJob
       #
       # @param [ActiveJob::Base] job The job to be performed.
       def enqueue(job)
-        raise(NotImplementedError)
+        payload = job.serialize.to_json
+        topic_name = 'jobs' # Default topic name
+        Pubsub.publish(payload, topic_name)
       end
 
       # Enqueue a job to be performed at a certain time.
@@ -15,7 +18,7 @@ module ActiveJob
       # @param [ActiveJob::Base] job The job to be performed.
       # @param [Float] timestamp The time to perform the job.
       def enqueue_at(job, timestamp)
-        raise(NotImplementedError)
+        raise NotImplementedError, "This adapter does not support delayed jobs"
       end
     end
   end
