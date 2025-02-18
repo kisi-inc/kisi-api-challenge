@@ -3,9 +3,9 @@
 source("https://rubygems.org")
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby("3.1.2")
+ruby("3.4.2")
 
-gem("rails", "6.1.7.2")
+gem("rails", "8.0.0")
 
 gem("google-cloud-pubsub")
 gem("pry-rails")
